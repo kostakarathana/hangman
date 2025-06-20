@@ -10,4 +10,4 @@ def sort_words_by_length(input_file, output_file):
 
 
 if __name__ == "__main__":
-    sort_words_by_length("words.txt", "words_by_length")
+    sort_words_by_length("text_files/words.txt", "text_files/words_by_length")
