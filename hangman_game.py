@@ -19,14 +19,13 @@ class Hangman:
     def get_length(self) -> int:
         return len(self.word)
     
-    def get_word(self) -> str:
-        return 
+    def _get_word(self) -> str:
+        return self.word
     
     def get_display_word(self) -> str:
         return self.display_word
 
-
-    def guess_letter(self,letter:str) -> bool:
+    def guess_letter(self,letter:str) -> str:
         if len(letter) != 1:
             raise ValueError("letter has to be one character!")
         
@@ -34,12 +33,18 @@ class Hangman:
             self.points -= 1
             print(f"you just lost a point! {letter} wasn't in the word. Points = {self.points}")
             if self.points <= 0:
-                print("you lose!")
+                raise ValueError("no points left, you lose!")
+            
+            print(self.get_display_word())    
+            return self.get_display_word()
         else:
             positions = [i for i in range(0, len(self.word)) if self.word[i] == letter]
             for i in positions:
                 self.display_word[i] = letter
             print(f"correct guess, {letter} is the in the indices {positions} of the letter")
+            
+            print(self.get_display_word())
+            return self.get_display_word()
 
 
 
@@ -47,10 +52,7 @@ class Hangman:
 
 if __name__ == "__main__":
     hangman = Hangman(7)
-    print(hangman.get_display_word())
     hangman.guess_letter("a")
-    print(hangman.get_display_word())
     hangman.guess_letter("e")
-    print(hangman.get_display_word())
     
 
