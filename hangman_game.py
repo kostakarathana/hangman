@@ -38,17 +38,17 @@ class Hangman:
 
         if letter not in self._word:
             self.points -= 1
-            print(f"you just lost a point! {letter} wasn't in the word. Points = {self.points}")
+            # print(f"you just lost a point! {letter} wasn't in the word. Points = {self.points}")
             if self.points <= 0:
                 self.progress = "fail"
-            print(self.get_display_word())
+            # print(self.get_display_word())
         else:
             positions = [i for i, c in enumerate(self._word) if c == letter]
             for i in positions:
                 self.display_word[i] = letter
-            print(f"correct guess, {letter} is in the indices {positions}")
-            print(self.get_display_word())
+            # print(f"correct guess, {letter} is in the indices {positions}")
+            # print(self.get_display_word())
             if ''.join(self.display_word) == self._word:
                 self.progress = "win"
-                print("word found, congrats!")
+                # print("word found, congrats!")
         return positions

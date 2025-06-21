@@ -12,3 +12,8 @@ The idea here is to play around with algorithms to build a system that can beat 
 
 Algorithmic approach: Find a recursive algorithm that just logically removes words after each guess. In hangman you are also allowed to see the length of the word, so that instantly removes a large number of words.
 
+## Log
+
+- I/O was incredibly slow. 
+
+- Diagnosing with time module
