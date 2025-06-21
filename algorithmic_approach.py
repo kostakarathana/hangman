@@ -10,7 +10,6 @@ class AlgorithmicSolution:
         self.filtered_words = [word for word in WORD_LIST if len(word) == self.word_length]
 
     
-
     def see_progress(self):
         return self.game.get_status()
 
@@ -36,8 +35,6 @@ class AlgorithmicSolution:
 
 
     def optimise_sol_space(self, letter: str, positions: list):
-
-
         if not positions:
             self.filtered_words = [word for word in self.filtered_words if letter not in word]
         else:
@@ -51,7 +48,8 @@ if __name__ == "__main__":
     trials = 0
 
     for i,word in enumerate(WORD_LIST):
-    
+        if i == 500:
+            break
         trials += 1
         sol = AlgorithmicSolution(force_word=word)
 
@@ -64,5 +62,4 @@ if __name__ == "__main__":
 
         print(f"SUCCESS RATE: {100*(success_rate):.1f}%")
         print(f"percentage complete approx:  {100*i/466550}%")
-
 
