@@ -3,6 +3,10 @@ from collections import defaultdict
 import numpy as np
 import pandas as pd
 import time
+from functools import lru_cache
+
+
+
 
 try:
     from tqdm import tqdm
@@ -20,6 +24,7 @@ class AlgorithmicSolution:
         self.word_length = self.game.get_length()
         self.letters_guessed = set()
         self.filtered_words = [word for word in WORD_LIST if len(word) == self.word_length]
+        self.words_seen = set()
 
     def _cheat_and_see_word(self): # NEVER to be used except in testing!
         return self.game._get_word()
@@ -27,7 +32,8 @@ class AlgorithmicSolution:
     def see_progress(self): 
         return self.game.get_status()
 
-    def find_letter_to_guess(self):
+    def find_letter_to_guess(self): # Huge bottleneck #1 (use counter maybe, need caching of some kind)
+
         freq = defaultdict(int)
         for word in self.filtered_words:
             for char in word:
@@ -35,20 +41,28 @@ class AlgorithmicSolution:
                     freq[char] += 1
         if not freq:
             return None
+        
+
         maximum = max(freq, key=freq.get)
         self.letters_guessed.add(maximum)
-
         return maximum
 
     def take_guess(self):
         letter = self.find_letter_to_guess()
         if not letter:
             return
-        positions = self.game.guess_letter(letter)
+
+
+        positions = self.game.guess_letter(letter) # 0% of runtime time
+
+        
         self.optimise_sol_space(letter, positions)
+   
 
 
-    def optimise_sol_space(self, letter: str, positions: list):
+    def optimise_sol_space(self, letter: str, positions: list): # Huge bottleneck #2
+
+        start = time.time()
         if not positions:
             self.filtered_words = [word for word in self.filtered_words if letter not in word]
         else:
@@ -56,6 +70,7 @@ class AlgorithmicSolution:
                 word for word in self.filtered_words
                 if all(word[pos] == letter for pos in positions)
             ]
+        
 
 
 
@@ -69,7 +84,7 @@ if __name__ == "__main__":
     
 
     for i, word in iterator:
-        if i % 500 != 0:
+        if i % 1000 != 0:
             continue
         trials += 1
         sol = AlgorithmicSolution(force_word=word)
@@ -87,5 +102,3 @@ if __name__ == "__main__":
     print(f"Successes: {successes}")
     print(f"Success Rate: {100 * successes / trials:.2f}%")
     print(f"Time taken: {time.time() - start:.2f} seconds")
-
-

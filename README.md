@@ -17,3 +17,6 @@ Algorithmic approach: Find a recursive algorithm that just logically removes wor
 - I/O was incredibly slow. 
 
 - Diagnosing with time module
+
+- Interesting observation: analysing total char count across words rather than unique letters within each words, using the total 
+approach is actually faster and gets better results!
