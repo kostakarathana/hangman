@@ -52,3 +52,9 @@ class Hangman:
                 self.progress = "win"
                 # print("word found, congrats!")
         return positions
+    
+
+if __name__ == "__main__":
+    for _ in range(10000):
+        h = Hangman()
+        print(f"{_}")
