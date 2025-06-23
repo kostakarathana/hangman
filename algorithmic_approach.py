@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd
 import time
 from functools import lru_cache
+import cython
 
 
 
@@ -40,7 +41,7 @@ class AlgorithmicSolution:
                 if char not in self.letters_guessed:
                     freq[char] += 1
         if not freq:
-            return None
+            return None  
         
 
         maximum = max(freq, key=freq.get)
