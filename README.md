@@ -22,3 +22,5 @@ Algorithmic approach: Find a recursive algorithm that just logically removes wor
 approach is actually faster and gets better results!
 
 - massive increase in speed with cython
+
+- another big increase in speed by preloading

@@ -19,12 +19,18 @@ except ImportError:
 with open('text_files/words.txt', 'r') as f:
     WORD_LIST = [line.strip().lower() for line in f if line.strip()]
 
+WORDS_BY_LENGTH = defaultdict(list)
+for i in range(1,46):
+    WORDS_BY_LENGTH[f"{i}"] = [word for word in WORD_LIST if len(word) == i]
+
+
+
 class AlgorithmicSolution:
     def __init__(self, force_word=None):
         self.game = Hangman(force_word)
         self.word_length = self.game.get_length()
         self.letters_guessed = set()
-        self.filtered_words = [word for word in WORD_LIST if len(word) == self.word_length]
+        self.filtered_words = WORDS_BY_LENGTH[f"{self.word_length}"]
         self.words_seen = set()
 
     def _cheat_and_see_word(self): # NEVER to be used except in testing!
@@ -63,7 +69,6 @@ class AlgorithmicSolution:
 
     def optimise_sol_space(self, letter: str, positions: list): # Huge bottleneck #2
 
-        start = time.time()
         if not positions:
             self.filtered_words = [word for word in self.filtered_words if letter not in word]
         else:
