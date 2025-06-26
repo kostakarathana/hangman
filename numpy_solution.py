@@ -1,11 +1,7 @@
 from hangman_game import Hangman
 from collections import defaultdict
 import time
-
-
-
-
-
+import numpy as np
 from tqdm import tqdm
 
 
@@ -33,20 +29,39 @@ class AlgorithmicSolution:
     def see_progress(self): 
         return self.game.get_status()
 
-    def find_letter_to_guess(self) -> str | None: # Huge bottleneck #1 (use counter maybe, need caching of some kind)
+    # def find_letter_to_guess(self) -> str | None: # Huge bottleneck #1 (use counter maybe, need caching of some kind)
 
-        freq: defaultdict[str,int] = defaultdict(int)
-        for word in self.filtered_words:
-            for char in word:
-                if char not in self.letters_guessed:
-                    freq[char] += 1
-        if not freq:
-            return None  
+    #     freq: defaultdict[str,int] = defaultdict(int)
+    #     for word in self.filtered_words:
+    #         for char in word:
+    #             if char not in self.letters_guessed:
+    #                 freq[char] += 1
+    #     if not freq:
+    #         return None  
         
 
-        maximum: str = max(freq, key=freq.get)
-        self.letters_guessed.add(maximum)
-        return maximum
+    #     maximum: str = max(freq, key=freq.get)
+    #     self.letters_guessed.add(maximum)
+    #     return maximum
+
+    def find_letter_to_guess(self) -> str | None: 
+
+        char_array: np.ndarray = np.array([list(word) for word in self.filtered_words])
+        flattened_chars: np.ndarray = char_array.flatten()
+
+        mask: np.ndarray = np.isin(flattened_chars, list(self.letters_guessed), invert=True)
+        filtered_chars = flattened_chars[mask]
+
+        if filtered_chars.size == 0:
+            return None
+        
+        letters, counts = np.unique(filtered_chars, return_counts=True) # type: ignore
+
+        max_index = np.argmax(counts)
+        guess: str = letters[max_index]
+        
+        self.letters_guessed.add(guess)
+        return guess
 
     def take_guess(self):
         letter = self.find_letter_to_guess()

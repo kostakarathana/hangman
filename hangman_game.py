@@ -30,7 +30,7 @@ class Hangman:
     def get_display_word(self) -> str:
         return ' '.join(self.display_word)
 
-    def guess_letter(self, letter: str) -> list:
+    def guess_letter(self, letter: str) -> list[int]:
         positions = []
         if len(letter) != 1:
             raise ValueError("letter has to be one character!")
