@@ -3,7 +3,6 @@ import time
 import cython_accel
 from tqdm import tqdm
 from collections import defaultdict
-import numpy as np
 
 with open('text_files/words.txt', 'r') as f:
     WORD_LIST = [line.strip().lower() for line in f if line.strip()]
@@ -16,7 +15,7 @@ class AlgorithmicSolution:
     def __init__(self, force_word=None):
         self.game = Hangman(force_word)
         self.word_length = self.game.get_length()
-        self.letters_guessed = set()
+        self.letters_guessed: set[str] = set()
         self.filtered_words = WORDS_BY_LENGTH[f"{self.word_length}"]
 
     def see_progress(self):
@@ -46,8 +45,8 @@ if __name__ == "__main__":
 
     for i, word in tqdm(enumerate(WORD_LIST), total=len(WORD_LIST)):
 
-        # if i % 1000 != 0:
-        #     continue
+        if i % 1000 != 0:
+            continue
         trials += 1
         sol = AlgorithmicSolution(force_word=word)
         while sol.see_progress() == "processing":

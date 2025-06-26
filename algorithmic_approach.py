@@ -19,7 +19,7 @@ except ImportError:
 with open('text_files/words.txt', 'r') as f:
     WORD_LIST = [line.strip().lower() for line in f if line.strip()]
 
-WORDS_BY_LENGTH = defaultdict(list)
+WORDS_BY_LENGTH: defaultdict[list[str], int] = defaultdict(list)
 for i in range(1,46):
     WORDS_BY_LENGTH[f"{i}"] = [word for word in WORD_LIST if len(word) == i]
 
@@ -27,9 +27,9 @@ for i in range(1,46):
 
 class AlgorithmicSolution:
     def __init__(self, force_word=None):
-        self.game = Hangman(force_word)
-        self.word_length = self.game.get_length()
-        self.letters_guessed = set()
+        self.game: Hangman = Hangman(force_word)
+        self.word_length: int = self.game.get_length()
+        self.letters_guessed: set[str] = set()
         self.filtered_words = WORDS_BY_LENGTH[f"{self.word_length}"]
         self.words_seen = set()
 

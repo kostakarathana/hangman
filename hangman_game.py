@@ -6,14 +6,14 @@ with open('text_files/words.txt', 'r') as f:
 
 class Hangman:
     def __init__(self, force_word=None) -> None:
-        self._word = ""
+        self._word: str = ""
         self._generate_word(force_word)
-        self.points = 7
+        self.points: int = 7
         self.display_word = ['_' for _ in range(self.get_length())]
         self.progress = "processing"
 
-    def _generate_word(self, force_word=None) -> None:
-        if force_word:
+    def _generate_word(self, force_word: str = "") -> None:
+        if force_word != "":
             self._word = force_word.lower()
         else:
             self._word = r.choice(WORD_LIST)
