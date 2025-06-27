@@ -6,7 +6,7 @@ from tqdm import tqdm
 
 
 # Global: Read the word list once
-with open('text_files/words.txt', 'r') as f:
+with open('../text_files/words.txt', 'r') as f:
     WORD_LIST = [line.strip().lower() for line in f if line.strip()]
 
 WORDS_BY_LENGTH: defaultdict[list[str], int] = defaultdict(list)

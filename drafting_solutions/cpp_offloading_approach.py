@@ -4,7 +4,7 @@ import cython_accel
 from tqdm import tqdm
 from collections import defaultdict
 
-with open('text_files/words.txt', 'r') as f:
+with open('../text_files/words.txt', 'r') as f:
     WORD_LIST = [line.strip().lower() for line in f if line.strip()]
 
 WORDS_BY_LENGTH = defaultdict(list)
